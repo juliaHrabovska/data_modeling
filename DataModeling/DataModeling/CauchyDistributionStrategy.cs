@@ -9,12 +9,30 @@ namespace DataModeling
 {
     class CauchyDistributionStrategy : DistributionStrategy
     {
-        private String[] PARAMETERS = { "parameter1", "parameter2" };
+        private String[] PARAMETERS = { "x0", "gamma" };
 
         public List<double> generateData(Dictionary<String, double> parameters)
         {
-            MessageBox.Show("CauchyDistributionStrategy");
-            return null;
+            double xBegin = parameters["xBegin"];
+            double step = parameters["step"];
+            double xEnd = parameters["xEnd"];
+            double x0 = parameters["x0"];
+            double gamma = parameters["gamma"];
+
+            List<double> dots = new List<double>();
+
+            for (double x = xBegin; x <= xEnd; x += step)
+            {
+                dots.Add(x);
+                dots.Add(cauchyFunction(x, x0, gamma));
+            }
+
+            return dots;
+        }
+
+        private double cauchyFunction(double x, double x0, double gamma)
+        {
+            return ((1 / Math.PI) * Math.Atan((x - x0) / gamma)) + 0.5;
         }
 
         public string[] getParameters()
