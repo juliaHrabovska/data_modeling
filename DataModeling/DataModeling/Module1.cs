@@ -31,7 +31,24 @@ namespace DataModeling
         {
 
             DistributionStrategy strategy = map[comboBox1.SelectedItem.ToString()];
-            MessageBox.Show(strategy.getParameters()[0]);
+            List<String> parameterList = new List<String>();
+            parameterList.Add("xBegin");
+            parameterList.Add("xEnd");
+            parameterList.Add("step");
+            parameterList.AddRange(strategy.getParameters());
+            TableParameters tableParameters = new TableParameters(parameterList);
+            DialogResult dialogResult = tableParameters.ShowDialog();
+            if (dialogResult.Equals(DialogResult.OK))
+            {
+                textBox1.Clear();
+                List<double> dots = strategy.generateData(tableParameters.getValueMap());                
+                for (int i = 0; i < dots.Count; i += 2)
+                {
+                    textBox1.Text += String.Format("{0:N2}  {1:N2}", dots[i], dots[i + 1]) + Environment.NewLine;
+
+                }
+                
+            }
         }
     }
 }

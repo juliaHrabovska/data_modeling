@@ -9,7 +9,7 @@ namespace DataModeling
     interface DistributionStrategy
     {
 
-        List<double> generateData(List<double> parameters); 
+        List<double> generateData(Dictionary<String, double> parameters); 
 
         String[] getParameters();
     }
