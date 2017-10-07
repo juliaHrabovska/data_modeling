@@ -9,14 +9,13 @@ namespace DataModeling
 {
     class PoissonDistributionStrategy : DistributionStrategy
     {
-        private String[] PARAMETERS = { "lambda" };
-        private double step = 0.01;
+        private String[] PARAMETERS = { "lambda" };        
 
         public List<double> generateData(Dictionary<String, double> parameters)
         {            
             double xBegin = parameters["xBegin"];
             double step = parameters["step"];
-            double xEnd = parameters["xEnd"] - step;            
+            double xEnd = parameters["xEnd"];            
             double lambda = parameters["lambda"];
 
             List<double> dots = new List<double>();
@@ -32,12 +31,34 @@ namespace DataModeling
 
         private double poissonFunction(double x, double lambda)
         {
-            return Math.Pow(lambda, x) * Math.Exp(-1 * lambda) / factorial(x);
+            return Math.Exp(-1 * lambda) * poissonSum(x, lambda);
         }
 
-        private double factorial(double x)
+        private double poissonSum(double x, double lambda)
         {
-            return Math.Log(Math.Floor(x)) + x * Math.Log(Math.Floor(x) + 1);
+            int floorX = Convert.ToInt32(Math.Floor(x));
+            double sum = 0.0;
+            for(int i=0; i <= floorX; i++)
+            {
+                sum += Math.Pow(lambda, i) / factorial(i);
+            }
+
+            return sum;
+        }
+                
+
+        private int factorial(int x)
+        {
+            if(x == 0)
+            {
+                return 1;
+            }
+            int fact = x;
+            for (int counter = x - 1; counter >= 1; counter--)
+            {
+                fact = fact * counter;                
+            }
+            return fact;
         }
 
         public string[] getParameters()
