@@ -11,19 +11,20 @@ namespace DataModeling
     {
         private String[] PARAMETERS = { "lambda" };        
 
-        public List<double> generateData(Dictionary<String, double> parameters)
+        public override List<double> generateData(Dictionary<String, double> parameters)
         {            
             double xBegin = parameters["xBegin"];
             double step = parameters["step"];
             double xEnd = parameters["xEnd"];            
             double lambda = parameters["lambda"];
+            double deviation = parameters["deviation"];
 
             List<double> dots = new List<double>();
 
             for(double x = xBegin; x <= xEnd; x += step)
             {
                 dots.Add(x);
-                dots.Add(poissonFunction(x, lambda));
+                dots.Add(poissonFunction(x, lambda) + getRandomDeviation(deviation));
             }
 
             return dots;
@@ -38,7 +39,7 @@ namespace DataModeling
         {
             int floorX = Convert.ToInt32(Math.Floor(x));
             double sum = 0.0;
-            for(int i=0; i <= floorX; i++)
+            for(int i = 0 ; i <= floorX; i++)
             {
                 sum += Math.Pow(lambda, i) / factorial(i);
             }
@@ -61,7 +62,7 @@ namespace DataModeling
             return fact;
         }
 
-        public string[] getParameters()
+        public override string[] getParameters()
         {
             return PARAMETERS;
         }

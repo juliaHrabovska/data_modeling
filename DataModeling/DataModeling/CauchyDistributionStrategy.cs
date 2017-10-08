@@ -11,20 +11,21 @@ namespace DataModeling
     {
         private String[] PARAMETERS = { "x0", "gamma" };
 
-        public List<double> generateData(Dictionary<String, double> parameters)
+        public override List<double> generateData(Dictionary<String, double> parameters)
         {
             double xBegin = parameters["xBegin"];
             double step = parameters["step"];
             double xEnd = parameters["xEnd"];
             double x0 = parameters["x0"];
             double gamma = parameters["gamma"];
+            double deviation = parameters["deviation"];
 
             List<double> dots = new List<double>();
 
             for (double x = xBegin; x <= xEnd; x += step)
             {
                 dots.Add(x);
-                dots.Add(cauchyFunction(x, x0, gamma));
+                dots.Add(cauchyFunction(x, x0, gamma) + getRandomDeviation(deviation));
             }
 
             return dots;
@@ -35,7 +36,7 @@ namespace DataModeling
             return ((1 / Math.PI) * Math.Atan((x - x0) / gamma)) + 0.5;
         }
 
-        public string[] getParameters()
+        public override string[] getParameters()
         {
             return PARAMETERS;
         }

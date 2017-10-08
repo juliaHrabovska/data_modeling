@@ -13,6 +13,7 @@ namespace DataModeling
     public partial class Module1 : Form
     {
         private Dictionary<String, DistributionStrategy> map = new Dictionary<String, DistributionStrategy>();
+        private List<double> dots;
 
         public Module1()
         {
@@ -34,21 +35,37 @@ namespace DataModeling
             List<String> parameterList = new List<String>();
             parameterList.Add("xBegin");
             parameterList.Add("xEnd");
-            parameterList.Add("step");
+            parameterList.Add("Dots number");
+            parameterList.Add("deviation");            
             parameterList.AddRange(strategy.getParameters());
             TableParameters tableParameters = new TableParameters(parameterList);
             DialogResult dialogResult = tableParameters.ShowDialog();
             if (dialogResult.Equals(DialogResult.OK))
             {
                 textBox1.Clear();
-                List<double> dots = strategy.generateData(tableParameters.getValueMap());                
+                tableParameters.getValueMap().Add("step", getStep(tableParameters.getValueMap()));
+                dots = strategy.generateData(tableParameters.getValueMap());                
                 for (int i = 0; i < dots.Count; i += 2)
                 {
-                    textBox1.Text += String.Format("{0:N2}  {1:N2}", dots[i], dots[i + 1]) + Environment.NewLine;
-
+                    //Времменный вывод точек (Здесь должен быть вывод на график)
+                    textBox1.Text += String.Format("{0:N5}  {1:N5}", dots[i], dots[i + 1]) + Environment.NewLine;
                 }
-                
+                button2.Enabled = true;
             }
+        }
+
+        private double getStep(Dictionary<String, double> parameters)
+        {
+            double xBegin = parameters["xBegin"];
+            double dots = parameters["Dots number"];
+            double xEnd = parameters["xEnd"];
+
+            return (xEnd - xBegin) / dots;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //Запись данных в файл. Данные уже сохранeны в dots 
         }
     }
 }

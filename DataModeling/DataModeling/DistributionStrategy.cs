@@ -6,11 +6,22 @@ using System.Threading.Tasks;
 
 namespace DataModeling
 {
-    interface DistributionStrategy
+    abstract class DistributionStrategy
     {
+        private static Random random = new Random();
 
-        List<double> generateData(Dictionary<String, double> parameters); 
+        public abstract List<double> generateData(Dictionary<String, double> parameters);
 
-        String[] getParameters();
+        public abstract String[] getParameters();
+
+        protected double getRandomDeviation(double deviation)
+        {
+            return random.NextDouble() * deviation * getPlusOrMinus();
+        }
+
+        protected double getPlusOrMinus()
+        {
+            return random.NextDouble() > 0.5 ? 1 : -1;
+        }
     }
 }
