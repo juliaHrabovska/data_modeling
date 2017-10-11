@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace DataModeling
 {
@@ -65,7 +66,25 @@ namespace DataModeling
 
         private void button2_Click(object sender, EventArgs e)
         {
-            //Запись данных в файл. Данные уже сохранeны в dots 
+            //Запись данных в файл. Данные уже сохранeны в dots
+            SaveFileDialog sfd = new SaveFileDialog();
+
+            sfd.InitialDirectory = @"C:\";
+            sfd.RestoreDirectory = true;
+            sfd.FileName = "*.txt";
+            sfd.Filter = "txt files (*.txt)|*.txt";
+
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                Stream fileStream = sfd.OpenFile();
+                StreamWriter sw = new StreamWriter(fileStream);
+
+                sw.Write(textBox1.Text);
+
+                sw.Close();
+                fileStream.Close();
+            }
+             
         }
     }
 }
