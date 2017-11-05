@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace DataModeling
 {
-    abstract class DistributionStrategy
+    public abstract class DistributionStrategy
     {
         private static Random random = new Random();
 
         public abstract List<double> generateData(Dictionary<String, double> parameters);
 
         public abstract String[] getParameters();
+
+        public abstract double validateParametr(String name, object value, List<string> errors);
 
         protected double getRandomDeviation(double deviation)
         {

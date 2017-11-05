@@ -33,13 +33,9 @@ namespace DataModeling
         {
 
             DistributionStrategy strategy = map[comboBox1.SelectedItem.ToString()];
-            List<String> parameterList = new List<String>();
-            parameterList.Add("xBegin");
-            parameterList.Add("xEnd");
-            parameterList.Add("Dots number");
-            parameterList.Add("deviation");            
+            List<String> parameterList = new List<String>();             
             parameterList.AddRange(strategy.getParameters());
-            TableParameters tableParameters = new TableParameters(parameterList);
+            TableParameters tableParameters = new TableParameters(parameterList, strategy);
             DialogResult dialogResult = tableParameters.ShowDialog();
             if (dialogResult.Equals(DialogResult.OK))
             {

@@ -62,6 +62,32 @@ namespace DataModeling
             return fact;
         }
 
+        public override double validateParametr(String name, object value, List<string> errors)
+        {
+            if(name.Equals("lambda"))
+            {
+                double convertedValue = 0.0;
+                try
+                {
+                    convertedValue = Convert.ToInt32(value);
+                }
+                catch (OverflowException)
+                {
+                    errors.Add(value + " is outside the range of the Int32 type.");
+                }
+                catch (FormatException)
+                {
+                    errors.Add(value + " is not an integer.");
+                }
+                return convertedValue;
+            }
+            else
+            {
+                throw new ArgumentException("Unknown parameter " + name);
+            }
+            
+        }
+
         public override string[] getParameters()
         {
             return PARAMETERS;

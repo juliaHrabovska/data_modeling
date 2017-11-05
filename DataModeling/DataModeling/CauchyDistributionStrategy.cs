@@ -40,5 +40,55 @@ namespace DataModeling
         {
             return PARAMETERS;
         }
+
+        public override double validateParametr(String name, object value, List<string> errors)
+        {
+            switch(name)
+            {
+                case "x0": return validateX0(value, errors);
+                case "gamma": return validateGamma(value, errors);
+                default: throw new ArgumentException("Unknown parameter " + name);
+            }
+        }
+
+        private double validateX0(object value, List<string> errors)
+        {
+            double convertedValue = 0.0;
+            try
+            {
+                convertedValue = Convert.ToInt32(value);                
+            }
+            catch (OverflowException)
+            {
+                errors.Add(value + " is outside the range of the Int32 type.");                
+            }
+            catch (FormatException)
+            {
+                errors.Add(value + " is not an integer.");                
+            }
+            return convertedValue;
+        }
+
+        private double validateGamma(object value, List<string> errors)
+        {
+            double convertedValue = 0.0;
+            try
+            {
+                convertedValue = Convert.ToDouble(value);
+                if (convertedValue <= 0)
+                {
+                    errors.Add("gamma must be bigger than 0.");
+                }                
+            }
+            catch (OverflowException)
+            {
+                errors.Add(value + " is outside the range of the Double type.");
+            }
+            catch (FormatException)
+            {
+                errors.Add(value + " is not a double.");
+            }
+            return convertedValue;
+        }
     }
 }

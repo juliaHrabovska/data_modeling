@@ -65,6 +65,7 @@
     <Compile Include="Module2.Designer.cs">
       <DependentUpon>Module2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Parameter.cs" />
     <Compile Include="PoissonDistributionStrategy.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
