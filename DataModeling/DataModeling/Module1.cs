@@ -67,20 +67,40 @@ namespace DataModeling
 
             sfd.InitialDirectory = @"C:\";
             sfd.RestoreDirectory = true;
-            sfd.FileName = "*.txt";
-            sfd.Filter = "txt files (*.txt)|*.txt";
+            sfd.FileName = "*.csv";
+            sfd.Filter = "csv files (*.csv)|*.csv";
 
             if (sfd.ShowDialog() == DialogResult.OK)
             {
                 Stream fileStream = sfd.OpenFile();
                 StreamWriter sw = new StreamWriter(fileStream);
 
-                sw.Write(textBox1.Text);
+                sw.Write(buidOutputText());
 
                 sw.Close();
                 fileStream.Close();
             }
              
+        }
+
+        private string buidOutputText()
+        {
+            StringBuilder sb = new StringBuilder();
+            bool flag = false;
+            foreach (double d in dots)
+            {
+                sb.Append(d);
+                if (flag)
+                {
+                    sb.Append(Environment.NewLine);   
+                } else
+                {
+                    sb.Append(";");
+                }
+                flag = !flag;
+            }
+
+            return sb.ToString();
         }
     }
 }

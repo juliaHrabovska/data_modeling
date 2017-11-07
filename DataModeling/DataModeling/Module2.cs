@@ -62,7 +62,9 @@ namespace DataModeling
             this.ResumeLayout(false);
 
         }
-
+        /**
+         * Reading from file. Double values should be separated by ","(comma)
+         */
         private void button1_Click(object sender, EventArgs e)
         {
 
