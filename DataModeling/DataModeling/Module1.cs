@@ -86,6 +86,9 @@ namespace DataModeling
         private string buidOutputText()
         {
             StringBuilder sb = new StringBuilder();
+            sb.Append(comboBox1.SelectedItem.ToString()).Append(";");
+            sb.Append(DateTime.Today).Append(";");
+            sb.Append(Environment.UserName).Append(Environment.NewLine);
             bool flag = false;
             foreach (double d in dots)
             {

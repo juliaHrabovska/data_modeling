@@ -76,7 +76,7 @@ namespace DataModeling
                 {
                     var lines = File.ReadAllLines(openFileDialog1.FileName);
 
-                    for (int i = 0; i < lines.Length; i++)
+                    for (int i = 1; i < lines.Length; i++)
                     {
                         var values = lines[i].Split(';');
 
@@ -92,5 +92,6 @@ namespace DataModeling
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
     }
 }
