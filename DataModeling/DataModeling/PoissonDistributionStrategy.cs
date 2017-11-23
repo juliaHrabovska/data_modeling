@@ -32,16 +32,25 @@ namespace DataModeling
 
         private double poissonFunction(double x, double lambda)
         {
-            return Math.Exp(-1 * lambda) * poissonSum(x, lambda);
+            double result = Math.Exp(-1 * lambda) * poissonSum(x, lambda);            
+            return (result <= 1.0 && result >= -1.0) ? result : 1;
         }
 
         private double poissonSum(double x, double lambda)
         {
             int floorX = Convert.ToInt32(Math.Floor(x));
             double sum = 0.0;
+            int factorialAddition;
+            double mathPow;
             for(int i = 0 ; i <= floorX; i++)
             {
-                sum += Math.Pow(lambda, i) / factorial(i);
+                factorialAddition = factorial(i);
+                mathPow = Math.Pow(lambda, i);
+                if (factorialAddition == 0)
+                {
+                    break;
+                }
+                sum += mathPow / factorialAddition;
             }
 
             return sum;
