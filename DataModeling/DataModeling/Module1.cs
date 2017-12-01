@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace DataModeling
 {
@@ -15,6 +16,7 @@ namespace DataModeling
     {
         private Dictionary<String, DistributionStrategy> map = new Dictionary<String, DistributionStrategy>();
         private List<double> dots;
+        Series pointsSeries = new Series("Points");
 
         public Module1()
         {
@@ -27,13 +29,15 @@ namespace DataModeling
                 comboBox1.Items.Add(key);
             }
             comboBox1.SelectedIndex = 0;
+
+           
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
 
             DistributionStrategy strategy = map[comboBox1.SelectedItem.ToString()];
-            List<String> parameterList = new List<String>();             
+            List<String> parameterList = new List<String>();
             parameterList.AddRange(strategy.getParameters());
             TableParameters tableParameters = new TableParameters(parameterList, strategy);
             DialogResult dialogResult = tableParameters.ShowDialog();
@@ -48,6 +52,7 @@ namespace DataModeling
                     textBox1.Text += String.Format("{0:N5}  {1:N5}", dots[i], dots[i + 1]) + Environment.NewLine;
                 }
                 button2.Enabled = true;
+                showChartPoints();
             }
         }
 
@@ -62,8 +67,8 @@ namespace DataModeling
 
         private void button2_Click(object sender, EventArgs e)
         {
-            //Запись данных в файл. Данные уже сохранeны в dots
-            SaveFileDialog sfd = new SaveFileDialog();
+               //Запись данных в файл. Данные уже сохранeны в dots
+               SaveFileDialog sfd = new SaveFileDialog();
 
             sfd.InitialDirectory = @"C:\";
             sfd.RestoreDirectory = true;
@@ -95,7 +100,7 @@ namespace DataModeling
                 sb.Append(d);
                 if (flag)
                 {
-                    sb.Append(Environment.NewLine);   
+                    sb.Append(Environment.NewLine);
                 } else
                 {
                     sb.Append(";");
@@ -105,5 +110,35 @@ namespace DataModeling
 
             return sb.ToString();
         }
+
+
+        public void showChartPoints()
+        {
+            chartPoints.Series.Clear();
+            pointsSeries.ChartType = SeriesChartType.Point;
+            pointsSeries.Color = Color.Red;
+            chartPoints.Series.Add(pointsSeries);
+
+            chartPoints.ChartAreas[0].AxisX.Minimum = Math.Round(dots[0], 0);
+            chartPoints.ChartAreas[0].AxisX.Maximum = Math.Round(dots[dots.Count-2], 0);
+
+            ////for (int i = 0; i < dots.Count; i += 2)
+            ////{
+            ////    pointsSeries.Points.AddXY(dots[i], dots[i + 1]);
+            ////}
+
+            for (int i = 0; i < dots.Count; i += 2)
+            {
+                if (double.IsPositiveInfinity(dots[i + 1]))
+                {
+                    pointsSeries.Points.AddXY(dots[i], 1);
+                }
+                else
+                {
+                    pointsSeries.Points.AddXY(dots[i], dots[i + 1]);
+                }  
+            }
+        }
+
     }
 }

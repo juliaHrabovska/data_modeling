@@ -13,7 +13,7 @@ namespace DataModeling
     public partial class Form1 : Form
     {
         private Module1 module1;
-        private Module2 module2;
+        private Module2 module2 = new Module2();
 
         public Form1()
         {
@@ -36,15 +36,13 @@ namespace DataModeling
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (module1 == null)
+            if (module2.IsDisposed)
             {
                 module2 = new Module2();
-                module2.Show();
             }
-            else
-            {
-                module2.Focus();
-            }
+            module2.Show();
+            module2.BringToFront();
+            module2.Activate(); 
         }
     }
 }
