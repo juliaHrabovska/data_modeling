@@ -1,19 +1,25 @@
-﻿using System.Data.SqlClient;
+﻿using DataModeling;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Text;
+using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 public class DBManager
 {
-    SqlConnection conection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Admin\Source\Repos\data_modeling\DataModeling\DataModeling\Database1.mdf;Integrated Security=True");
-    SqlCommand command = new SqlCommand();
-    SqlDataReader reader;
+    static SqlConnection conection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Admin\Source\Repos\data_modeling\DataModeling\DataModeling\Database1.mdf;Integrated Security=True");
+    static SqlCommand command = new SqlCommand();
+    static SqlDataReader reader;
 
     public static void insert(DistributionInfo distributionInfo)
     {
         SqlCommand command = new SqlCommand("INSERT INTO Data_Modeling (id, autor, distribution, restoring) VALUES ('" + 
-            distributionInfo.getId() + "','" + distributionInfo.getAutor() + "','" + 
-            convertToString(distributionInfo.getDots()) + "','" + distributionInfo.getRestoring() + "')");
-        command.ExecuteQuery();
-        command.Close();
-        return true;
+            distributionInfo.Id + "','" + distributionInfo.Autor + "','" + 
+            convertToString(distributionInfo.Dots) + "','" + distributionInfo.Restoring + "')");
+        command.ExecuteNonQuery();
+        command.Clone();
+       
     }
 
     public static List<DistributionInfo> getAll()
@@ -29,13 +35,13 @@ public class DBManager
         {
             while (reader.Read())
             {
-                id = reader.GetLong(0);
+                id = (long) reader.GetSqlInt64(0);
                 autor = reader.GetString(1);
                 distribution = reader.GetString(2);
                 restoring = reader.GetString(3);
 
                 List<Double> dots = getDotsFromString(distribution);
-                distributionInfo.Add(new DistributionInfo(id, autor, dots, restoring));
+                distributionInfo.Add(new DistributionInfo(id, dots, autor, restoring));
             }
         }
         reader.Close();
@@ -47,15 +53,15 @@ public class DBManager
     {
         SqlCommand command = new SqlCommand("SELECT id, autor, distribution, restoring FROM Data_Modeling WHERE id=" + id);
         reader = command.ExecuteReader();
-        long id;
-        String autor;
-        String distribution;
-        String restoring;
+        long id1 = 0;
+        String autor = "";
+        String distribution = "";
+        String restoring = "";
         if (reader.HasRows)
         {
             while (reader.Read())
             {
-                id = reader.GetLong(0);
+                id = (long)reader.GetSqlInt64(0);
                 autor = reader.GetString(1);
                 distribution = reader.GetString(2);
                 restoring = reader.GetString(3);
@@ -67,23 +73,18 @@ public class DBManager
         }
 
         List<Double> dots = getDotsFromString(distribution);
-        return new DistributionInfo(id, autor, dots, restoring);
+        return new DistributionInfo(id1, dots, autor,  restoring);
     }
 
     private static List<Double> getDotsFromString(String dotsInString)
     {
         List<Double> dots = new List<Double>();
-        string[] stringSeparators = new string[] { "\n" };
-        var lines = dotsInString.Split(stringSeparators);
+        String pattern = @"(;|\s)";
+        var stringValues = Regex.Split(dotsInString, pattern);
 
-        for (int i = 1; i < lines.Length; i++)
+        for (int j = 0; j < stringValues.Length; j++)
         {
-            var values = lines[i].Split(';');
-
-            for (int j = 0; j < values.Length; j++)
-            {
-                dots.Add(double.Parse(values[j]));
-            }
+            dots.Add(double.Parse(stringValues[j]));
         }
         return dots;
     }
@@ -91,9 +92,6 @@ public class DBManager
     private static String convertToString(List<Double> dots)
     {
         StringBuilder sb = new StringBuilder();
-        sb.Append(comboBox1.SelectedItem.ToString()).Append(";");
-        sb.Append(DateTime.Today).Append(";");
-        sb.Append(Environment.UserName).Append(Environment.NewLine);
         bool flag = false;
         foreach (double d in dots)
         {

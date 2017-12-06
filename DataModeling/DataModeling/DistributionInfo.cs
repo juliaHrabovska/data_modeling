@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataModeling
 {
-    class DistributionInfo
+    public class DistributionInfo
     {
         private long id;
         private List<Double> dots;
