@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CauchyDistributionStrategy.cs" />
+    <Compile Include="ChartDraw.cs" />
     <Compile Include="DistributionStrategy.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -69,6 +70,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="InterpolationInfo.cs" />
     <Compile Include="Module1.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -16,7 +16,6 @@ namespace DataModeling
     {
         private Dictionary<String, DistributionStrategy> map = new Dictionary<String, DistributionStrategy>();
         private List<double> dots;
-        Series pointsSeries = new Series("Points");
 
         public Module1()
         {
@@ -115,29 +114,7 @@ namespace DataModeling
         public void showChartPoints()
         {
             chartPoints.Series.Clear();
-            pointsSeries.ChartType = SeriesChartType.Point;
-            pointsSeries.Color = Color.Red;
-            chartPoints.Series.Add(pointsSeries);
-
-            chartPoints.ChartAreas[0].AxisX.Minimum = Math.Round(dots[0], 0);
-            chartPoints.ChartAreas[0].AxisX.Maximum = Math.Round(dots[dots.Count-2], 0);
-
-            ////for (int i = 0; i < dots.Count; i += 2)
-            ////{
-            ////    pointsSeries.Points.AddXY(dots[i], dots[i + 1]);
-            ////}
-
-            for (int i = 0; i < dots.Count; i += 2)
-            {
-                if (double.IsPositiveInfinity(dots[i + 1]))
-                {
-                    pointsSeries.Points.AddXY(dots[i], 1);
-                }
-                else
-                {
-                    pointsSeries.Points.AddXY(dots[i], dots[i + 1]);
-                }  
-            }
+            ChartDraw.showChart(dots, "Points", SeriesChartType.Point, Color.Red, chartPoints);
         }
 
     }
