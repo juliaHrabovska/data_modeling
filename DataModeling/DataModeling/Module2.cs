@@ -19,6 +19,8 @@ namespace DataModeling
         private String seriesNameMethod1 = "Interpolate Lagrange";
         private String seriesNameMethod2 = "Interpolate Newton";
         double[] xValues, yValues;
+        List<double> lagrangeDots = new List<double>();
+        List<double> newtonDots = new List<double>();
 
         private void initValues()
         {
@@ -216,13 +218,20 @@ namespace DataModeling
             return value * factorial(value - 1);
         }
 
+        private void buttonSaveInDB_Click(object sender, EventArgs e)
+        { 
+            DistributionInfo distributionInfoLagrange = new DistributionInfo(1, lagrangeDots, "Autor", "Lagrange");
+            DistributionInfo distributionInfoNewton = new DistributionInfo(2, newtonDots, "Autor", "Newton");
+            DBManager.insert(distributionInfoLagrange);
+            DBManager.insert(distributionInfoNewton);
+            buttonSaveInDB.Enabled = false;
+        }
 
         private void fromFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            buttonSaveInDB.Enabled = true;
             dots.Clear();
-
             openFileDialog1.Filter = "(*.csv, *.txt)|*.csv;*.txt";
-
             try
             {
                 if (openFileDialog1.ShowDialog() == DialogResult.OK)

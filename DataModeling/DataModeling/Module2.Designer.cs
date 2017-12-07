@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.readToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fromFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,14 +69,14 @@
             // fromFileToolStripMenuItem
             // 
             this.fromFileToolStripMenuItem.Name = "fromFileToolStripMenuItem";
-            this.fromFileToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.fromFileToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.fromFileToolStripMenuItem.Text = "From file";
             this.fromFileToolStripMenuItem.Click += new System.EventHandler(this.fromFileToolStripMenuItem_Click);
             // 
             // fromDBToolStripMenuItem
             // 
             this.fromDBToolStripMenuItem.Name = "fromDBToolStripMenuItem";
-            this.fromDBToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.fromDBToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.fromDBToolStripMenuItem.Text = "From DB";
             // 
             // saveInDBToolStripMenuItem
@@ -86,10 +86,10 @@
             // 
             // chartInterpolation
             // 
-            chartArea1.Name = "ChartArea1";
-            this.chartInterpolation.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chartInterpolation.Legends.Add(legend1);
+            chartArea2.Name = "ChartArea1";
+            this.chartInterpolation.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chartInterpolation.Legends.Add(legend2);
             this.chartInterpolation.Location = new System.Drawing.Point(220, 27);
             this.chartInterpolation.Name = "chartInterpolation";
             this.chartInterpolation.Size = new System.Drawing.Size(573, 384);
@@ -130,24 +130,25 @@
             this.buttonSaveInDB.TabIndex = 4;
             this.buttonSaveInDB.Text = "Save in DB";
             this.buttonSaveInDB.UseVisualStyleBackColor = true;
+            this.buttonSaveInDB.Click += new System.EventHandler(this.buttonSaveInDB_Click);
             // 
             // labelInfoLagrange
             // 
             this.labelInfoLagrange.AutoSize = true;
             this.labelInfoLagrange.Location = new System.Drawing.Point(13, 115);
             this.labelInfoLagrange.Name = "labelInfoLagrange";
-            this.labelInfoLagrange.Size = new System.Drawing.Size(52, 13);
+            this.labelInfoLagrange.Size = new System.Drawing.Size(75, 13);
             this.labelInfoLagrange.TabIndex = 5;
-            this.labelInfoLagrange.Text = "Lagrange";
+            this.labelInfoLagrange.Text = "Lagrange info:";
             // 
             // labelInfoNewton
             // 
             this.labelInfoNewton.AutoSize = true;
             this.labelInfoNewton.Location = new System.Drawing.Point(115, 115);
             this.labelInfoNewton.Name = "labelInfoNewton";
-            this.labelInfoNewton.Size = new System.Drawing.Size(44, 13);
+            this.labelInfoNewton.Size = new System.Drawing.Size(67, 13);
             this.labelInfoNewton.TabIndex = 6;
-            this.labelInfoNewton.Text = "Newton";
+            this.labelInfoNewton.Text = "Newton info:";
             // 
             // Module2
             // 
